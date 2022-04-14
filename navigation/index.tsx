@@ -14,10 +14,10 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import HomeScreen from '../screens/HomeScreen';
-import ComingSoonScreen from '../screens/ComingSoonScreen';
-import DownloadScreen from '../screens/DownloadScreen';
-import SearchScreen from '../screens/SearchScreen';
+import HomeScreen from '../screens/Home/HomeScreen';
+import ComingSoonScreen from '../screens/ComingSoon/ComingSoonScreen';
+import DownloadScreen from '../screens/Download/DownloadScreen';
+import SearchScreen from '../screens/Search/SearchScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -58,7 +58,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
-  
+
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
