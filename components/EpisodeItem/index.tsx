@@ -6,15 +6,16 @@ import styles from './styles';
 
 
 interface EpisodeItemProps {
-  episode: Episode
+  episode: Episode,
+  onPress: (episode: Episode) => {}
   
 }
 
 const EpisodeItem = (props: EpisodeItemProps) => {
-  const { episode } = props;
+  const { episode, onPress } = props;
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={() => onPress(episode)}>
        <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between"}}>
 
           <View style={{flexDirection: "row"}}>
@@ -31,7 +32,7 @@ const EpisodeItem = (props: EpisodeItemProps) => {
 
        </View>
        <Text style={styles.plot}>{episode.plot}</Text>
-    </View>
+    </Pressable>
   );
 
 }

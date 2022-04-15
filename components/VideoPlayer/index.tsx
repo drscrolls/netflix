@@ -1,7 +1,7 @@
 import { AntDesign } from '@expo/vector-icons';
 import { Video } from 'expo-av';
 import { Playback } from 'expo-av/build/AV';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Image, FlatList, Pressable } from 'react-native';
 import { Episode } from '../../types';
 import { Text, View } from '../Themed';
@@ -15,22 +15,23 @@ interface VideoPlayerProps {
 const VideoPlayer = (props: VideoPlayerProps) => {
   const { episode } = props;
   const [status, setStatus] = useState({});
+  const video = useRef<Playback>(null);
 
-  const video = useRef(null);
+  useEffect(() => {
+     if(!video){
+       return;
+     }
+    (async () => { 
+      await video?.current?.unloadAsync();
+      await video?.current?.loadAsync(
+        { uri: episode.video}, 
+        {},
+        false
+        );
+    })();
+  }, [episode])
+  
 
-  // const handleVideoRef = (component: Playback) => {
-  //   const playbackObject = component;
-  //   console.log(playbackObject);
-   
-  //   const source = {
-  //     uri: episode.video
-  //   };
-
-  //   const initialStatus = {
-
-  //   };
-  //   playbackObject.loadAsync( source, initialStatus, false );
-  // }
   return (
     <View style={styles.container}>
       <Video
@@ -43,6 +44,9 @@ const VideoPlayer = (props: VideoPlayerProps) => {
           uri: episode.poster
         }}
         usePoster={true}
+        posterStyle={{
+          resizeMode: "cover"
+        }}
         useNativeControls
         resizeMode="contain"
         onPlaybackStatusUpdate={status => setStatus(() => status)}
