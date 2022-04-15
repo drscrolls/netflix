@@ -18,7 +18,8 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import ComingSoonScreen from '../screens/ComingSoon/ComingSoonScreen';
 import DownloadScreen from '../screens/Download/DownloadScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import MovieDetailsScreen from '../screens/MovieDetails/MovieDetailsScreen';
+import { RootStackParamList, RootTabParamList, RootTabScreenProps, HomeTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -67,24 +68,10 @@ function BottomTabNavigator() {
       }}>
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
-          title: 'Home',
+        component={MovieDetailsScreen}
+        options={() => ({
+          headerShown: false,
           tabBarIcon: ({ color }) =><AntDesign name="home" size={24} color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <Ionicons
-                name="ios-menu-sharp"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
         })}
       />
       <BottomTab.Screen
@@ -115,3 +102,31 @@ function BottomTabNavigator() {
   );
 }
 
+
+const HomeTabStack = createNativeStackNavigator<HomeTabParamList>();
+
+function HomeTabNavigator() {
+  return(
+    <HomeTabStack.Navigator>
+      <HomeTabStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={
+          {
+            headerTitle: "Home"
+          }
+        }
+      />
+      <HomeTabStack.Screen
+        name="MovieDetails"
+        component={MovieDetailsScreen}
+        options={
+          {
+            title : ''
+          }
+        }
+      />
+    </HomeTabStack.Navigator>
+  );
+  
+}
